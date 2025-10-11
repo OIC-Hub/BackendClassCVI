@@ -41,8 +41,8 @@ const server = http.createServer((req, res) => {
     if (pathname === "/addstudent" && method === "POST") {
       const { id, name, subject } = query;
 
-      if ( !name || !subject) {
-        res.statusCode = 401
+      if (!name || !subject) {
+        res.statusCode = 401;
         res.end(JSON.stringify({ message: "Invalid request" }));
       }
 
@@ -60,15 +60,62 @@ const server = http.createServer((req, res) => {
 
     if (pathname === "/getstudents" && method === "GET") {
       res.setHeader("Content-Type", "json");
-        res.statusCode = 200;
-      res.end(JSON.stringify({ message: "Student fetched successfully", Student }));
+      res.statusCode = 200;
+      res.end(
+        JSON.stringify({ message: "Student fetched successfully", Student })
+      );
     }
+
+    if (pathname === "/updatestudent" && method === "PUT") {
+      const { id  } = query;
+
+      const index = Student.findIndex(
+        (student) => student.id === parseInt(id)
+      );
+
+       if (index === -1) {
+        res.statusCode = 404;
+        res.setHeader("Content-Type", "application/json");
+        res.end(JSON.stringify({ message: "User not found" }));
+        return;
+      }
+
+      const{name, subject} = query
+
+      Student[index] = {
+        id: parseInt(id),
+        name: name || Student[index].name,
+        subject: subject || Student[index.subject],
+      };
+
+      res.setHeader("Content-Type", "json");
+      res.statusCode = 200;
+      res.end(
+        JSON.stringify({ message: "Update student sucessfully" })
+      );
+    }
+
+    if(pathname === "/deletestudent" && method === "DELETE"){
+      const{id} = query;
+      const index = Student.findIndex((student) => student.id === parseInt(id));
+        if (index === -1) {
+        res.statusCode = 404;
+        res.setHeader("Content-Type", "application/json");
+        res.end(JSON.stringify({ message: "User not found" }));
+        return;
+      }
+      Student.splice(index);
+
+      res.statusCode = 200;
+      res.end(JSON.stringify({message: "User deleted Successfully"}));
+    }
+
   } catch (error) {
     res.setHeader("Content-Type", "json");
 
     res.statusCode = 500;
     // res.end({ message: "Internal Server Error", error });
-    res.end(JSON.stringify({message: "Internal Server Error", error}))
+    res.end(JSON.stringify({ message: "Internal Server Error", error }));
     console.error(error);
   }
 });
