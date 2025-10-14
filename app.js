@@ -8,7 +8,7 @@ dotenv.config();
 
 const PORT = process.env.PORT || 5000;
 
-const Student = [{ id: 1, name: "Ade", subject: "Math" }];
+const Student = [];
 
 const server = http.createServer((req, res) => {
   const parseUrl = url.parse(req.url, true);
@@ -117,6 +117,23 @@ const server = http.createServer((req, res) => {
     // res.end({ message: "Internal Server Error", error });
     res.end(JSON.stringify({ message: "Internal Server Error", error }));
     console.error(error);
+  }
+
+  if(pathname === "/add" && method === "POST"){
+    let body = "";
+
+    req.on("data", (chunk) => {
+      body += chunk.toString()
+    })
+
+    req.on("end", () => {
+      const data = JSON.parse(body)
+      Student.push(data)
+    })
+    
+    res.setHeader('Content-Type', "application/json")
+    res.statusCode = 200;
+    res.end(JSON.stringify({message: "Student added"}))
   }
 });
 
