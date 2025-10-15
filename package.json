@@ -2,14 +2,15 @@
   "name": "dayone",
   "version": "1.0.0",
   "description": "backend class",
-  "main": "server.js",
+  "main": "express.js",
   "scripts": {
-    "dev": "nodemon app.js"
+    "dev": "nodemon express.js"
   },
   "author": "Ade",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^17.2.3",
+    "express": "^5.1.0",
     "nodemon": "^3.1.10"
   }
 }
