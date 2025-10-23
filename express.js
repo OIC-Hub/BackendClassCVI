@@ -3,17 +3,23 @@ const dotenv = require("dotenv");
 const dataRoute = require('./routes/data')
 const productRoute = require("./routes/product")
 const connectDB = require("./config/db")
+const cors = require("cors")
+const helmet = require("helmet");
+const auth = require("./routes/auth");
 dotenv.config();
 
 const PORT = process.env.PORT;
 
 const app = express();
 app.use(express.json());
+app.use(cors());
+app.use(helmet());
 
 connectDB();
 
 app.use("/api", dataRoute);
 app.use("/product", productRoute);
+app.use("/auth", auth)
 
 // app.get("/home", (req, res) => {
 //   res.send("hello world");
