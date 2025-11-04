@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken")
 
 const register = async (req, res) => {
     try {
-        const { name, email, phoneNo, password } = req.body;
+        const { name, email, phoneNo, password, role } = req.body;
 
         const salt = await bcrypt.genSalt(10);
         const hashPassword = await bcrypt.hash(password, salt);
@@ -13,7 +13,8 @@ const register = async (req, res) => {
             name: name,
             email: email,
             password: hashPassword,
-            phoneNo: phoneNo
+            phoneNo: phoneNo,
+            role: role || 'user'
         })
 
         newUser.save();
@@ -66,4 +67,8 @@ const getProfile = async (req, res) => {
     res.status(200).send({ message: "fetched profile successfully", Data })
 }
 
-module.exports = { register, login, get, getProfile }
+const onlyAdmin = (req, res) => {
+    res.status(200).send({ message: "Welcome Admin" })
+}
+
+module.exports = { register, login, get, getProfile, onlyAdmin }
