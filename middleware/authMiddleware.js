@@ -1,22 +1,21 @@
-const jwt = require('jsonwebtoken');
+
+const jwt = require("jsonwebtoken");
+const Auth = require("../models/Auth");
 
 const AuthGateKeeper = async (req, res, next) => {
-      const token = req.headers.authorization?.split(" ")[1];
-        if (!token) {
-            return res.status(401).json({ message: "Unauthorized" });
-        }
-    try {
-        const decode = jwt.verify(token, process.env.JWT_SECRET);
-        if (!decode) {
-            return res.status(401).json({ message: "Unauthorized" });
-        }
-        req.user = decode;
-        next();
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) return res.status(401).json({ message: "No token provided" });
 
-    } catch (error) {
-        console.error("Error decoding token:", error);
-    }
-    
-}
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await Auth.findById(decoded.id).select("-password");
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    req.user = user; 
+    next();
+  } catch (error) {
+    res.status(401).json({ message: "Invalid token" });
+  }
+};
 
 module.exports = AuthGateKeeper;
