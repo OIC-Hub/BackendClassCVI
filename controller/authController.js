@@ -4,8 +4,12 @@ const jwt = require("jsonwebtoken");
 const sendEmail = require("../services/nodemailer");
 
 const register = async (req, res) => {
+  
   try {
     const { name, email, phoneNo, password, role } = req.body;
+
+      const otp = Math.floor(1000 + Math.random() * 9000); 
+    console.log(otp)
 
     const salt = await bcrypt.genSalt(10);
     const hashPassword = await bcrypt.hash(password, salt);
@@ -16,6 +20,7 @@ const register = async (req, res) => {
       password: hashPassword,
       phoneNo: phoneNo,
       role: role || "user",
+      otp: otp,
     });
 
     newUser.save();
@@ -24,7 +29,9 @@ const register = async (req, res) => {
     sendEmail.sendMail(
       `${newUser.email}`,
       "Welcome to Our Platform",
-      `<h1>Hi ${newUser.name},</h1><p>Thank you for registering on our platform!</p>`
+      `<h1>Hi ${newUser.name},</h1><p>Thank you for registering on our platform!</p>
+      <h1> Otp: <p> ${otp} </p></h1>
+      `
     );
   } catch (error) {
     console.error(error);

@@ -23,7 +23,12 @@ const authSchema = new mongoose.Schema(
       enum: ["user", "admin"],
       require: true,
       default: "user",
+    },
+    otp: {
+      type: String,
+      require: false,
     }
+
   },
   {
     timestamp: true,
