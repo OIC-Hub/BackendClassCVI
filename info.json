@@ -1,0 +1,12 @@
+{
+  "name": "MyTestUSD",
+  "symbol": "USDT",
+  "type": "BEP20",
+  "decimals": 6,
+  "description": "A demo stable-like token for testing and development purposes. This token has no real-world value.",
+  "website": "https://mytestusd.io",
+  "explorer": "https://bscscan.com/token/0x803fb4dF3a9B4e0dc0B92FA0a4De780A05a7C471",
+  "status": "active",
+  "id": "0x803fb4dF3a9B4e0dc0B92FA0a4De780A05a7C471",
+  "logo": "https://rose-hidden-silverfish-585.mypinata.cloud/ipfs/bafkreic25ctoxwh63ymkp7iz3f7si7nvoxuz33xrybf3tlzhw3b2uphdxm"
+}

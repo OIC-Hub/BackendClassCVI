@@ -6,6 +6,8 @@ const connectDB = require("./config/db")
 const cors = require("cors")
 const helmet = require("helmet");
 const auth = require("./routes/auth");
+const ejs = require("ejs");
+const path = require("path");
 dotenv.config();
 
 const PORT = process.env.PORT;
@@ -14,6 +16,11 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(helmet());
+app.set("view engine", "ejs");
+app.use(express.static("public"))
+// app.set("views", path.join(__dirname, "views"))
+app.set('views', path.join(__dirname, 'views'));
+
 
 connectDB();
 
