@@ -27,6 +27,10 @@ const authSchema = new mongoose.Schema(
     otp: {
       type: String,
       require: false,
+    },
+    Isverify: {
+      default: false,
+      type: Boolean,
     }
 
   },

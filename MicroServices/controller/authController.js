@@ -90,8 +90,28 @@ const getProfile = async (req, res) => {
   res.status(200).send({ message: "fetched profile successfully", Data });
 };
 
+const verifyOtp = async (req, res) => {
+  const {email, otp} = req.body;
+  const user = await Auth.findOne({email});
+
+  if(!user){
+    return res.status(400).send({message: "User not found"});
+  }
+
+  if(user.otp !== otp){
+    return res.status(400).send({message: "Invalid OTP"});
+  }
+
+  if(otp === user.otp){
+    user.Isverify = true;
+    await user.save();
+    return res.status(200).send({message: "OTP verified successfully"});
+  }
+
+}
+
 const onlyAdmin = (req, res) => {
   res.status(200).send({ message: "Welcome Admin" });
 };
 
-module.exports = { register, login, get, getProfile, onlyAdmin };
+module.exports = { register, login, get, getProfile, onlyAdmin, verifyOtp };

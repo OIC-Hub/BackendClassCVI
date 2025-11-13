@@ -10,6 +10,7 @@ route.get('/', get)
 route.post("/login", login)
 route.get("/getprofile", AuthGateKeeper, getProfile )
 route.get("/onlyadmin", AuthGateKeeper, roleMiddleware(["admin"]), onlyAdmin)
+route.post("/verify-otp", verifyOtp)
 
 
 module.exports = (route);

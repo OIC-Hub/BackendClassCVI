@@ -4,7 +4,9 @@ const getUserData = async (req, res) => {
     // const { user } = require('../model/data');
     res.render('users', { users: user });
 }
-
+const home = (req,res)=>{
+  res.render("index")
+}
 const addData = (req, res) => {
   const{id, name} = req.body;
 
@@ -18,4 +20,19 @@ const addData = (req, res) => {
   res.redirect('/users');
 }
 
-module.exports = { getUserData, addData };
+const deleteData = (req, res) => {
+  try {
+    const {id} = req.params;
+    const userIndex = user.findIndex(u => u.id === parseInt(id));
+    if(userIndex !== -1){
+      user.splice(userIndex, 1);
+      res.redirect('/users');
+    } else {
+      res.status(404).send('User not found');
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+module.exports = { getUserData, addData, home, deleteData };
