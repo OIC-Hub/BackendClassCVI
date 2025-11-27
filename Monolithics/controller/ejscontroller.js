@@ -7,6 +7,10 @@ const getUserData = async (req, res) => {
 const home = (req,res)=>{
   res.render("index")
 }
+
+const imageform = (req, res)=> {
+  res.render("form")
+}
 const addData = (req, res) => {
   const{id, name} = req.body;
 
@@ -35,4 +39,4 @@ const deleteData = (req, res) => {
   }
 }
 
-module.exports = { getUserData, addData, home, deleteData };
+module.exports = { getUserData, addData, home, deleteData, imageform };
