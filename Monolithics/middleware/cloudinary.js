@@ -3,9 +3,9 @@ const dotenv = require("dotenv")
 dotenv.config();
 
 cloudinary.config({
- cloud_name:"dpld5dpgu",
-  api_secret:"IUlHJU6yh5J263ZlQ7a_xaa_82s",
-  api_key: "469949227858597",
+ cloud_name:"",
+  api_secret:"",
+  api_key: "",
 });
 
 const upload = async(req, res, next) => {
