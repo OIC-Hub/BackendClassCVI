@@ -8,12 +8,16 @@ const upload = multer({ dest: 'uploads/' });
 
 
 router.get('/users', getUserData);
-router.post('/add', addData);
+// router.post('/add', addData);
 router.get("/", home)
 router.get("/form", imageform)
 router.get('/delete/:id', deleteData);
 
-router.post('/upload', upload.single('image'), uploadMiddleware.upload);
+router.post('/upload',
+    upload.single('image'),      
+    uploadMiddleware.upload,     
+    addData                      
+);
 
 
 module.exports = router;
